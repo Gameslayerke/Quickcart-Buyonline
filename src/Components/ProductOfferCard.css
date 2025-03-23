@@ -1,0 +1,110 @@
+.product-offer-card-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .product-offer-image-section {
+    flex: 1;
+  }
+  
+  .product-offer-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .product-offer-details-section {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .product-offer-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .product-offer-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .product-offer-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .original-price {
+    font-size: 1.2rem;
+    color: #999;
+    text-decoration: line-through;
+  }
+  
+  .discounted-price {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .discount-percentage {
+    font-size: 1rem;
+    color: #ff4757;
+    font-weight: bold;
+  }
+  
+  .payment-section {
+    margin-bottom: 20px;
+  }
+  
+  .phone-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .error-message {
+    color: #ff4757;
+    font-size: 0.9rem;
+  }
+  
+  .success-message {
+    color: #2ed573;
+    font-size: 0.9rem;
+  }
+  
+  .product-offer-actions {
+    margin-bottom: 20px;
+  }
+  
+  .buy-now-btn {
+    background-color: #2ed573;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .buy-now-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .back-btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }

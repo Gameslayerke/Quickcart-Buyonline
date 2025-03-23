@@ -1,0 +1,25 @@
+/* Countdown Timer Container */
+.countdown-timer {
+    font-size: 1rem;
+    color: #ff4757; /* Red color for urgency */
+    font-weight: bold;
+    margin-top: 10px;
+    display: flex;
+    gap: 5px; /* Space between time units */
+  }
+  
+  /* Individual Time Units (hours, minutes, seconds) */
+  .countdown-timer span {
+    padding: 5px 10px;
+    background: #f1f1f1; /* Light background for readability */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  /* Expired Offer Message */
+  .offer-expired {
+    color: #999; /* Gray color for expired offers */
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
