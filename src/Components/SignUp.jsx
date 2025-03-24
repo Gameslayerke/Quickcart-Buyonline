@@ -1,122 +1,204 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
+import { 
+  FaUser, 
+  FaEnvelope, 
+  FaPhone, 
+  FaLock, 
+  FaEye, 
+  FaEyeSlash,
+  FaSpinner,
+  FaUserPlus,
+  FaSignInAlt
+} from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { BsFacebook } from "react-icons/bs";
+import "./AuthForms.css";
+
 const SignUp = () => {
-    
-    let [username, setUsername] = useState("");
-    let [email, setEmail] = useState("");
-    let [phone, setPhone] = useState("");
-    let [password, setPassword] = useState("");
-    let [loading, setLoading] = useState(false); 
-    let [success, setSuccess] = useState("");
-    let [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    phone: "",
+    password: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate(); 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
-    const submitForm = async (e) => {
-        e.preventDefault();
+  const submitForm = async (e) => {
+    e.preventDefault();
+    setSuccess("");
+    setError("");
 
-        setSuccess("");
-        setError("");
+    if (!Object.values(formData).every(Boolean)) {
+      setError("All fields are required.");
+      return;
+    }
 
-        if (!email || !phone || !password || !username) {
-            setError("All fields are required.");
-            return;
-        }
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "https://alvins.pythonanywhere.com/api/signup", 
+        formData
+      );
 
-        try {
-            setLoading(true); 
+      setSuccess(response.data.message || "Registration successful!");
+      setFormData({
+        username: "",
+        email: "",
+        phone: "",
+        password: ""
+      });
+      setTimeout(() => navigate("/signin"), 1500);
+    } catch (error) {
+      setError(error.response?.data?.error || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            const userData = {
-                username: username,
-                email: email,
-                phone: phone,
-                password: password
-            };
-
-            const response = await axios.post("https://alvins.pythonanywhere.com/api/signup", userData);
-
-            setLoading(false); 
-            setSuccess(response.data.message || "User registered successfully!"); 
-
-            setUsername("");
-            setEmail("");
-            setPhone("");
-            setPassword("");
-
-            navigate("/Signin"); 
-
-        } catch (error) {
-            setLoading(false); 
-            setError(error.response?.data?.error || "Something went wrong. Please try again.");
-        }
-    };
-
-    return (
-        <div className="row justify-content-center mt-4">
-            <div className="col-md-6 card shadow p-4">
-                <h2>Sign Up</h2>
-
-                {}
-                <div className="text-warning">{loading && <span>Loading...</span>}</div>
-                <div className="text-success">{success}</div>
-                <div className="text-danger">{error}</div>
-
-                {}
-                <form onSubmit={submitForm}>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        placeholder="Enter Username" 
-                        required 
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)} 
-                    />
-                    <br />
-
-                    <input 
-                        type="email" 
-                        className="form-control" 
-                        placeholder="Enter Email" 
-                        required 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} 
-                    />
-                    <br />
-
-                    <input 
-                        type="tel" 
-                        className="form-control" 
-                        placeholder="Enter Phone No." 
-                        required 
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)} 
-                    />
-                    <br />
-
-                    <input 
-                        type="password" 
-                        className="form-control" 
-                        placeholder="Enter Password" 
-                        required 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)} 
-                    />
-                    <br />
-                    
-                    <button className="btn btn-primary" type="submit" disabled={loading}>
-                        {loading ? "Signing Up..." : "Sign Up"}
-                    </button>
-                </form>
-
-                {}
-                <p>
-                  Already have an account? <Link to="/signin">Sign in</Link>
-                </p>
-
-            </div>
+  return (
+    <div className="auth-card">
+      <div className="auth-header">
+        <h2 className="auth-title">
+          <FaUserPlus className="auth-icon" /> Create Account
+        </h2>
+        <p className="auth-subtitle">Join us to get started</p>
+      </div>
+      
+      {loading && (
+        <div className="auth-loading">
+          <FaSpinner className="spinner" /> Creating your account...
         </div>
-    );
+      )}
+      {success && (
+        <div className="auth-alert auth-success">
+          {success}
+        </div>
+      )}
+      {error && (
+        <div className="auth-alert auth-error">
+          {error}
+        </div>
+      )}
+
+      <form onSubmit={submitForm}>
+        <div className="input-group">
+          <span className="input-icon">
+            <FaUser />
+          </span>
+          <input
+            type="text"
+            name="username"
+            className="auth-input with-icon"
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div className="input-group">
+          <span className="input-icon">
+            <FaEnvelope />
+          </span>
+          <input
+            type="email"
+            name="email"
+            className="auth-input with-icon"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div className="input-group">
+          <span className="input-icon">
+            <FaPhone />
+          </span>
+          <input
+            type="tel"
+            name="phone"
+            className="auth-input with-icon"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div className="input-group">
+          <span className="input-icon">
+            <FaLock />
+          </span>
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            className="auth-input with-icon"
+            placeholder="Create Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button 
+            type="button" 
+            className="password-toggle"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
+        
+        <button 
+          type="submit" 
+          className="auth-btn"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <FaSpinner className="btn-spinner" /> Creating Account...
+            </>
+          ) : (
+            "Sign Up"
+          )}
+        </button>
+      </form>
+
+      <div className="auth-divider">
+        <span>or sign up with</span>
+      </div>
+
+      <div className="social-auth">
+        <button type="button" className="social-btn google">
+          <FcGoogle /> Google
+        </button>
+        <button type="button" className="social-btn facebook">
+          <BsFacebook /> Facebook
+        </button>
+      </div>
+
+      <p className="auth-footer">
+        Already have an account?{" "}
+        <Link to="/signin" className="auth-link">
+          <FaSignInAlt /> Sign In
+        </Link>
+      </p>
+    </div>
+  );
 };
 
 export default SignUp;

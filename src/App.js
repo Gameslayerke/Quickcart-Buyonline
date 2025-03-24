@@ -16,6 +16,7 @@ import Notifications from "./Components/Notifications";
 import Offer from "./Components/Offer";
 import ProductOfferCard from "./Components/ProductOfferCard";
 import Profile from "./Components/Profile";
+import Footer from "./Components/Footer"; // Import the Footer component
 
 function App() {
   return (
@@ -24,20 +25,23 @@ function App() {
         <Router>
           <div className="App">
             <Navbar />
-            <Routes>
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/" element={<Homepage />} />
-              <Route path="/category/:categoryId" element={<Homepage />} /> {/* Add this route */}
-              <Route path="/addproducts" element={<AddProduct />} />
-              <Route path="/productcard/:id" element={<ProductCard />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/offers" element={<Offer />} />
-              <Route path="/productoffercard/:id" element={<ProductOfferCard />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
+            <div className="main-content">
+              <Routes>
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/" element={<Homepage />} />
+                <Route path="/category/:categoryId" element={<Homepage />} />
+                <Route path="/addproducts" element={<AddProduct />} />
+                <Route path="/productcard/:id" element={<ProductCard />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/offers" element={<Offer />} />
+                <Route path="/productoffercard/:id" element={<ProductOfferCard />} />
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            </div>
+            <Footer /> {/* Footer added here */}
           </div>
         </Router>
       </OrdersProvider>
